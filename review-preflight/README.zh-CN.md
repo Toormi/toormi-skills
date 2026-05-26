@@ -71,7 +71,7 @@ Review Preflight 不应该被定位成：
 从这个仓库安装 skill：
 
 ```bash
-npx skills add https://github.com/Toormi/review-preflight
+npx skills add Toormi/toormi-skills --skills review-preflight
 ```
 
 ## 使用方式

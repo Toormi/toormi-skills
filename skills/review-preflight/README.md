@@ -131,10 +131,11 @@ So Review Preflight is not trying to be "a better code summarizer." It is trying
 ## Repository Structure
 
 ```text
-review-preflight/
-├── SKILL.md
-├── README.md
-└── README.zh-CN.md
+skills/
+└── review-preflight/
+    ├── SKILL.md
+    ├── README.md
+    └── README.zh-CN.md
 ```
 
 - `SKILL.md` contains the actual skill instructions.

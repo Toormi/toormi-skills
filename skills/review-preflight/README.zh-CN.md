@@ -129,10 +129,11 @@ Review Preflight 有三层价值：
 ## 仓库结构
 
 ```text
-review-preflight/
-├── SKILL.md
-├── README.md
-└── README.zh-CN.md
+skills/
+└── review-preflight/
+    ├── SKILL.md
+    ├── README.md
+    └── README.zh-CN.md
 ```
 
 - `SKILL.md` 包含实际的 skill 指令。

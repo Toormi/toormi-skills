@@ -2,7 +2,7 @@
 
 **Know the PR before you read the diff.**
 
-Read this in Chinese: [README.zh-CN.md](README.zh-CN.md)
+English | [中文](README.zh-CN.md)
 
 Review Preflight is a Agent skill that turns a pull request into a concise HTML briefing for human reviewers. It helps reviewers understand the intent, navigate the most important files first, and focus attention on likely risk areas before opening the full diff.
 
@@ -68,6 +68,14 @@ The skill works best with:
 
 The minimum useful input is a PR title, changed files, and diff.
 
+## Installation
+
+Install the skill from this repository:
+
+```bash
+npx skills add https://github.com/Toormi/review-preflight
+```
+
 ## Usage
 
 Invoke the skill with a PR URL, local branch, or pasted PR context:
@@ -126,13 +134,10 @@ So Review Preflight is not trying to be "a better code summarizer." It is trying
 review-preflight/
 ├── SKILL.md
 ├── README.md
-├── README.zh-CN.md
-└── agents/
-    └── openai.yaml
+└── README.zh-CN.md
 ```
 
 - `SKILL.md` contains the actual skill instructions.
-- `agents/openai.yaml` contains UI metadata for the skill.
 - `README.md` is the default English README.
 - `README.zh-CN.md` is the Chinese README.
 

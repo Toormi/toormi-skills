@@ -2,7 +2,7 @@
 
 **在读 diff 之前，先了解这个 PR。**
 
-English version: [README.md](README.md)
+[English](README.md) | 中文
 
 Review Preflight 是一个 Agent skill，用来把 Pull Request 转换成面向人工 reviewer 的 HTML 预检报告。它帮助 reviewer 在打开完整 diff 之前，先理解 PR 的意图、核心变更、推荐 review 路线和需要重点怀疑的风险区域。
 
@@ -66,6 +66,14 @@ Review Preflight 不应该被定位成：
 
 最低可用输入是 PR title、changed files 和 diff。
 
+## 安装
+
+从这个仓库安装 skill：
+
+```bash
+npx skills add https://github.com/Toormi/review-preflight
+```
+
 ## 使用方式
 
 可以直接传入 PR URL、本地分支或粘贴 PR 上下文：
@@ -124,13 +132,10 @@ Review Preflight 有三层价值：
 review-preflight/
 ├── SKILL.md
 ├── README.md
-├── README.zh-CN.md
-└── agents/
-    └── openai.yaml
+└── README.zh-CN.md
 ```
 
 - `SKILL.md` 包含实际的 skill 指令。
-- `agents/openai.yaml` 包含 skill 的 UI 元数据。
 - `README.md` 是默认英文 README。
 - `README.zh-CN.md` 是中文 README。
 

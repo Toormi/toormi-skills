@@ -4,7 +4,7 @@
 
 English | [中文](README.zh-CN.md)
 
-Review Preflight is a Agent skill that turns a pull request into a concise, self-contained HTML briefing file for human reviewers. It helps reviewers understand the intent, navigate the most important files first, and focus attention on likely risk areas before opening the full diff.
+Review Preflight is a Agent skill that turns a pull request into a concise, self-contained HTML briefing file for human reviewers. It helps reviewers understand the intent, see the shape of the change, navigate the most important files first, and focus attention on likely risk areas before opening the full diff.
 
 It is not an AI code reviewer. It does not approve, reject, or claim that code is correct. Its job is to reduce reviewer cold start.
 
@@ -16,6 +16,7 @@ Review Preflight reframes a PR from a raw diff into reviewer-ready decision mate
 
 - What is this PR trying to do?
 - What changed at the module or system level?
+- What relationships, flows, dependencies, states, or data shapes changed?
 - Which files should be reviewed first?
 - Which areas deserve skepticism?
 - What questions should the reviewer ask the author?
@@ -33,13 +34,30 @@ Typical content includes:
 - Review complexity
 - Core changes
 - Change map by area
+- Visual change graph or before/after diagram when useful
 - Suggested review route
 - Risk areas
 - Missing or weak tests
 - Questions for the author
 - Human review checklist
 
-The HTML can use richer presentation patterns such as metric strips, route timelines, risk matrices, annotated diff excerpts, module maps, cards, tables, callouts, tabs, collapsible sections, and checkbox lists when they help the reviewer scan faster.
+The HTML can use richer presentation patterns such as metric strips, route timelines, risk matrices, annotated diff excerpts, before/after change graphs, module maps, cards, tables, callouts, tabs, collapsible sections, and checkbox lists when they help the reviewer scan faster.
+
+## Visual Change Graphs
+
+Review Preflight can include diagrams directly in the HTML report when a PR is easier to review visually:
+
+| PR change | Diagram |
+| --- | --- |
+| Modules, files, components, dependencies | Change impact graph or dependency graph |
+| Function calls or execution paths | Call graph |
+| Business rules, conditions, errors, retries | Flowchart |
+| API, service, queue, webhook, or third-party interactions | Sequence diagram |
+| Classes, interfaces, fields, methods, inheritance | Class diagram |
+| Lifecycle or status transitions | State diagram |
+| Tables, fields, migrations, entity relationships | ER/data model diagram |
+
+The diagrams should stay small, use real code names, mark added/removed/modified elements, and focus on the paths a human should inspect first.
 
 ## What It Is Not
 
@@ -109,10 +127,11 @@ The output should be saved as HTML only. By default it should be a complete, sel
 Review Preflight is built around three layers:
 
 1. Understanding: help the reviewer grasp what the PR is.
-2. Navigation: help the reviewer decide where to start.
-3. Skepticism: help the reviewer know what to verify.
+2. Visualization: help the reviewer see what changed shape.
+3. Navigation: help the reviewer decide where to start.
+4. Skepticism: help the reviewer know what to verify.
 
-The most valuable parts are the second and third layers. A generic PR summary is easy to ignore; a review route and risk briefing can change how the reviewer spends attention.
+The most valuable parts are the visualization, navigation, and skepticism layers. A generic PR summary is easy to ignore; a change graph, review route, and risk briefing can change how the reviewer spends attention.
 
 ## Future of Review
 

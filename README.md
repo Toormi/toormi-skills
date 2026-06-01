@@ -8,18 +8,16 @@ Each skill lives in its own directory and includes a `SKILL.md` file with the in
 
 | Skill | Description |
 | --- | --- |
-| [`review-preflight`](skills/review-preflight/) | Generates a concise HTML briefing to help humans prepare for PR review. |
+| [`review-preflight`](skills/review-preflight/) | Generates an HTML briefing with review route, risk focus, and visual change graphs to help humans prepare for PR review. |
 
 ## Repository Structure
 
 ```text
 skills/
-├── README.md
-└── skills/
-    └── review-preflight/
-        ├── SKILL.md
-        ├── README.md
-        └── README.zh-CN.md
+└── review-preflight/
+    ├── SKILL.md
+    ├── README.md
+    └── README.zh-CN.md
 ```
 
 ## Using a Skill

@@ -1,13 +1,13 @@
 ---
 name: review-preflight
-description: Generate and save a concise self-contained HTML human review briefing before code review by turning PR titles, descriptions, changed files, commits, diffs, issue context, or local git changes into a Review Preflight report with PR intent, change map, suggested review route, risk areas, missing or weak tests, author questions, and a human checklist. Use when asked to prepare reviewers for a pull request, summarize a PR for review, triage a large or AI-generated PR, reduce reviewer cold start, create a PR preflight report, create or save an HTML review brief, or help an author improve a PR before requesting review.
+description: Use when asked to prepare reviewers for a pull request, summarize or visualize PR changes for review, triage a large or AI-generated PR, reduce reviewer cold start, create a PR preflight report, save an HTML review brief, draw change impact graphs or before/after PR diagrams, or help an author improve a PR before requesting review.
 ---
 
 # Review Preflight
 
 ## Purpose
 
-Prepare a human reviewer before they inspect a PR diff. Do not replace code review, approve changes, reject changes, or claim the code is correct. Convert PR evidence into a short briefing that helps the reviewer understand context, choose where to look first, and focus skepticism on the highest-value areas.
+Prepare a human reviewer before they inspect a PR diff. Do not replace code review, approve changes, reject changes, or claim the code is correct. Convert PR evidence into a short HTML briefing that helps the reviewer understand context, see the shape of the change, choose where to look first, and focus skepticism on the highest-value areas.
 
 ## Workflow
 
@@ -22,24 +22,30 @@ Prepare a human reviewer before they inspect a PR diff. Do not replace code revi
    - Group changes by system area or responsibility instead of listing files mechanically.
    - Identify the core files or modules where behavior, contracts, data, security, or tests actually change.
 
-3. Plan the review route.
+3. Visualize the changed shape when it helps review.
+   - Identify changed entities and relationships: files, modules, classes, functions, API endpoints, database tables, queues, events, external services, and tests.
+   - Use before/after diagrams when the previous and new structures can be reasonably inferred.
+   - Keep diagrams focused on the core review path or risk path, usually 5-12 nodes.
+   - Skip complex diagrams for tiny copy, config, or test-name changes; use a lightweight change map instead.
+
+4. Plan the review route.
    - Recommend an order that minimizes cold start and maximizes risk discovery.
    - Usually prioritize central business logic, public interfaces, schema or migration changes, security-sensitive paths, integration boundaries, then tests.
    - Explain why each stop belongs in the route.
 
-4. Surface concrete risks and uncertainty.
+5. Surface concrete risks and uncertainty.
    - Frame risks as things the reviewer should verify, not as final findings.
    - Prefer specific paths, functions, data flows, and behaviors over generic warnings.
    - Distinguish "not observed in the provided diff" from "definitely missing."
 
-5. Design and save the HTML presentation.
+6. Design and save the HTML presentation.
    - Save the report to a `.html` file before the final response.
    - Use the user's requested path when provided; otherwise write a clearly named file such as `review-preflight-<pr-or-branch-slug>.html` in the current working directory, adding a timestamp if needed to avoid overwriting an existing file.
    - Generate a complete, self-contained HTML document by default because the report is meant to open directly in a browser.
    - Use an HTML fragment only if the user explicitly asks for embeddable markup.
    - Adapt the layout to the PR instead of forcing every report into the same rigid section order.
 
-6. Produce a concise Review Preflight report.
+7. Produce a concise Review Preflight report.
    - Match the user's language unless they request otherwise.
    - Keep the main report readable in one pass.
    - Default to 3-5 core changes, 3-7 risk points, 3-5 author questions, and 5-10 checklist items.
@@ -68,6 +74,31 @@ Pay extra attention when a PR touches:
 - Configuration, infrastructure, deployment, CI, permissions, or environment-specific behavior.
 - Tests that are absent, only happy-path, lack regression cases, or do not cover the risky behavior changed.
 
+## Visual Change Maps
+
+Use visualizations only when they make review faster or clearer. Prefer one or two small review-focused diagrams over a large system map.
+
+Choose the diagram by the review question the PR raises:
+
+| PR change | Best diagram | Use it to answer |
+| --- | --- | --- |
+| Modules, files, components, dependencies, or call relationships changed | Change impact graph / dependency graph | What changed and where does impact spread? |
+| Function call chains or execution paths changed | Call graph | Which callers and callees should be reviewed first? |
+| Business flow, conditions, branching, retries, fallback, or error handling changed | Flowchart | How does the logic run now? |
+| Clients, APIs, services, queues, webhooks, RPC, HTTP, or third-party interactions changed | Sequence diagram | How does the request or event move through participants? |
+| Classes, interfaces, fields, methods, inheritance, or design patterns changed | Class diagram | How did object structure or responsibilities change? |
+| Statuses, lifecycle rules, approval states, payment states, or task states changed | State diagram | Which states and transitions changed? |
+| Tables, fields, relationships, migrations, or data model changed | ER/data model diagram | What data shape changed and how do entities relate? |
+
+Visual rules:
+
+- Mark additions with `+` and green, removals with `-` and red, modifications with `~` and amber, and unchanged context with gray.
+- Mark changed edges as well as changed nodes when a relationship, call, dependency, state transition, or data flow changed.
+- Use real names from the PR: file paths, class names, functions, services, endpoints, tables, events, jobs, queues, or commands.
+- Avoid vague labels such as "Logic", "Handler", "Data", or "Thing" unless the diff lacks better evidence.
+- Label inferred relationships as inferred, likely, appears, or needs confirmation.
+- Do not draw a full system architecture diagram unless the PR itself changes architecture.
+
 ## HTML Output
 
 Save the report as HTML only. Do not provide alternate report formats unless the user is asking to edit the skill itself or debug the generated HTML. In the final response, report the saved file path and a short summary of what it contains; do not paste the full HTML unless the user asks.
@@ -78,6 +109,8 @@ Use semantic, readable HTML and choose a presentation that fits the PR. Do not c
 - Metric strip for changed files, core files, risky paths, tests touched, migration changes, or external integrations.
 - Review route timeline showing the recommended order of files or modules to inspect.
 - Change map grouped by area, displayed as cards, columns, a table, or nested lists depending on density.
+- Visual change graph with before/after panels when relationships, flow, data shape, or state transitions matter.
+- Legend for added, removed, modified, and unchanged nodes or edges when a graph is included.
 - Risk matrix grouped by high, medium, and low risk, with each item stating what to verify.
 - Annotated diff excerpts with severity badges, margin notes, and jump links when specific lines or hunks drive review risk.
 - Module or request-flow maps using inline SVG, CSS boxes and arrows, or simple diagrams when relationships matter more than file order.
@@ -96,11 +129,12 @@ Keep the information architecture stable even when the layout varies:
 2. Review complexity.
 3. Core changes.
 4. Change map.
-5. Suggested review route.
-6. Risk areas.
-7. Missing or weak tests.
-8. Questions for the author.
-9. Human review checklist.
+5. Visual change graph, when useful.
+6. Suggested review route.
+7. Risk areas.
+8. Missing or weak tests.
+9. Questions for the author.
+10. Human review checklist.
 
 HTML rules:
 
@@ -108,6 +142,7 @@ HTML rules:
 - Use `<code>` for file paths, commands, symbols, and short literals.
 - Use headings, sections, lists, tables, cards, badges, or callouts to improve scanability.
 - Keep CSS inline in a `<style>` block and avoid external assets, build steps, CDNs, or network dependencies.
+- Use inline SVG or CSS-based diagrams for saved reports; Mermaid syntax may be included in a collapsible source section, but the HTML must remain understandable without fetching Mermaid from a CDN.
 - Include `<html>`, `<head>`, `<meta charset="utf-8">`, responsive viewport metadata, `<title>`, and `<body>` for saved reports.
 - Make the layout responsive and readable on laptop and tablet widths.
 - Use color, spacing, borders, and typography to create hierarchy, but keep the visual design quiet enough for code review work.
@@ -132,4 +167,4 @@ If the user names a reviewer role, tune the briefing:
 
 ## Quality Bar
 
-A good Review Preflight report makes the reviewer say: "I know what this PR is trying to do, where to start, what to distrust, and what to ask." If the output is merely a file summary, revise it toward review navigation and risk-focused human judgment.
+A good Review Preflight report makes the reviewer say: "I know what this PR is trying to do, what changed shape, where to start, what to distrust, and what to ask." If the output is merely a file summary or a decorative diagram, revise it toward review navigation, before/after relationships, and risk-focused human judgment.

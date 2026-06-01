@@ -47,15 +47,15 @@ The HTML can use richer presentation patterns such as metric strips, route timel
 
 Review Preflight can include diagrams directly in the HTML report when a PR is easier to review visually:
 
-| PR change | Diagram |
-| --- | --- |
-| Modules, files, components, dependencies | Change impact graph or dependency graph |
-| Function calls or execution paths | Call graph |
-| Business rules, conditions, errors, retries | Flowchart |
-| API, service, queue, webhook, or third-party interactions | Sequence diagram |
-| Classes, interfaces, fields, methods, inheritance | Class diagram |
-| Lifecycle or status transitions | State diagram |
-| Tables, fields, migrations, entity relationships | ER/data model diagram |
+| PR change                                                 | Diagram                                 |
+| --------------------------------------------------------- | --------------------------------------- |
+| Modules, files, components, dependencies                  | Change impact graph or dependency graph |
+| Function calls or execution paths                         | Call graph                              |
+| Business rules, conditions, errors, retries               | Flowchart                               |
+| API, service, queue, webhook, or third-party interactions | Sequence diagram                        |
+| Classes, interfaces, fields, methods, inheritance         | Class diagram                           |
+| Lifecycle or status transitions                           | State diagram                           |
+| Tables, fields, migrations, entity relationships          | ER/data model diagram                   |
 
 The diagrams should stay small, use real code names, mark added/removed/modified elements, and focus on the paths a human should inspect first.
 
@@ -146,20 +146,6 @@ Instead:
 So Review Preflight is not trying to be "a better code summarizer." It is trying to:
 
 > Reorganize PRs from diff form into a form humans can decide with more easily.
-
-## Repository Structure
-
-```text
-skills/
-└── review-preflight/
-    ├── SKILL.md
-    ├── README.md
-    └── README.zh-CN.md
-```
-
-- `SKILL.md` contains the actual skill instructions.
-- `README.md` is the default English README.
-- `README.zh-CN.md` is the Chinese README.
 
 ## Future Product Direction
 
